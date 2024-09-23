@@ -8,7 +8,7 @@ const TokenDisplay = ({
 	color = "black",
 	backgroundColor = "42, 97, 211",
 	fontSize = ".75rem",
-	inspectToken = (id: number) => {},
+	inspectToken = () => {},
 }: {
 	index: number;
 	token: string;

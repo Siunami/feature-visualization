@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import TokenDisplay from "./TokenDisplay";
-import { getBaseUrl, getMaxFeatureActs } from "../utils";
+import { getMaxFeatureActs } from "../utils";
 import { FeatureCardSubHeader } from "./FeatureCard";
 import { LoadingIcon, MinusIcon, PlusIcon, RightArrowIcon } from "./Icons";
 
@@ -30,26 +30,7 @@ export const TestSample: React.FC<TestSampleProps> = ({
 	const [loading, setLoading] = useState<boolean>(false);
 	const [hovering, setHovering] = useState<boolean>(false);
 	const testTextRef = useRef<HTMLDivElement>(null);
-	// const [testActivations, setTestActivations] = useState<any>([
-	// 	[
-	// 		[0],
-	// 		[0],
-	// 		[2.229448080062866],
-	// 		[0.4582373797893524],
-	// 		[0.826278805732727],
-	// 		[1.7092781066894531],
-	// 		[1.4163553714752197],
-	// 	],
-	// ]);
-	// const [textTokens, setTextTokens] = useState<string[]>([
-	// 	"These",
-	// 	"▁are",
-	// 	"▁ancient",
-	// 	"▁sum",
-	// 	"er",
-	// 	"ian",
-	// 	"▁texts",
-	// ]);
+
 	const [testActivations, setTestActivations] = useState<any>([]);
 	const [textTokens, setTextTokens] = useState<string[]>([]);
 
@@ -278,7 +259,7 @@ export const TestSamples: React.FC<TestSamplesProps> = ({
 					}}
 				/>
 			</div>
-			{samples.map((sample, i) => {
+			{samples.map((sample) => {
 				return (
 					<TestSample
 						key={sample}
