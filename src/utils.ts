@@ -8,7 +8,7 @@ export const PADDING = "10px";
 export const getBaseUrl = () => {
 	return process.env.NODE_ENV === "development"
 		? "http://localhost:5000"
-		: "https://steering-explorer-server.vercel.app";
+		: "https://feature-visualization-server.vercel.app";
 };
 
 export const processText = async (text: string) => {
