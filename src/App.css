@@ -1,0 +1,118 @@
+#root {
+  /* max-width: 1280px; */
+  /* margin: 0 auto; */
+  /* padding: 2rem; */
+  /* text-align: center; */
+}
+
+
+#root {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+#root::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none; /* Chrome, Safari, and Opera */
+}
+
+
+@keyframes loadingAnimation {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+.loading-text::after {
+  content: '';
+  animation: loadingAnimation 1s infinite;
+}
+
+/* Add feature container */
+.add-feature-container {
+  position: relative;
+  width: 400px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-icon {
+  position: absolute;
+  cursor: pointer;
+  font-size: 24px;
+  transition: opacity 0.3s ease-out;
+  z-index: 2;
+}
+
+.add-icon.hidden {
+  opacity: 0;
+}
+
+.feature-input {
+  position: absolute;
+  width: 40px;
+  height: 20px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: all 0.2s ease-out;
+  opacity: 0;
+  background-color: white;
+}
+
+.feature-input.visible {
+  width: 400px;
+  opacity: 1;
+}
+
+.feature-input:focus {
+  outline: none;
+  border-color: none;
+}
+
+/* Search */
+.search-results {
+  position: absolute;
+  width: 100%;
+  /* max-width: 300px; */
+  max-height: 300px;
+  margin-top: 10px;
+  color: black;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.search-result-item {
+  font-size: .75rem;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  user-select: none;
+  cursor: pointer;
+}
+
+.search-result-item:hover {
+  background-color: #c5c5c5;
+}
+
+.search-result-item span {
+  font-weight: bold;
+}
+
+.search-result-description {
+  margin-left: 10px;
+  text-align: left;
+}
