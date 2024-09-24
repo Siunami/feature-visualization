@@ -9,16 +9,14 @@ import { ProcessedFeaturesType } from "./types";
 import Explorer from "./components/Explorer";
 
 export default function App() {
-	const [uniqueFeatures, setUniqueFeatures] = useState<ProcessedFeaturesType[]>(
-		[]
-	);
-	const [processedFeatures, setProcessedFeatures] = useState<
-		ProcessedFeaturesType[]
-	>([]);
+	const [uniqueFeatures, setUniqueFeatures] =
+		useState<ProcessedFeaturesType[]>(bret_activations);
+	const [processedFeatures, setProcessedFeatures] =
+		useState<ProcessedFeaturesType[]>(bret_activations);
 
 	const [magnified, setMagnified] = useState<number | null>(null);
 
-	const [mode, setMode] = useState<"inspector" | "explorer">("explorer");
+	const [mode, setMode] = useState<"inspector" | "explorer">("inspector");
 
 	const onMagnify = (id: string) => {
 		const index: number = processedFeatures.findIndex(
