@@ -225,7 +225,7 @@ const Inspector = ({
 									maxValue={focusToken ? 1 : maxValue}
 									backgroundColor={focusToken ? "211, 56,43" : undefined}
 									color={"white"}
-									fontSize={"18px"}
+									fontSize={"24px"}
 									inspectToken={inspectToken}
 								/>
 							);
