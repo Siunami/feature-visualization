@@ -13,6 +13,7 @@ import {
 import { ProcessedFeaturesType } from "../types";
 import bret_tokens from "../data/base_bret_tokens_small.json";
 import bret_max_activations from "../data/base_bret_max_activations.json";
+import { LoadingIcon } from "./Icons";
 //
 const Inspector = ({
 	processedFeatures,
@@ -140,6 +141,12 @@ const Inspector = ({
 		setMaxActivations(result);
 	}, [processedFeatures]);
 
+	useEffect(() => {
+		console.log(tokens);
+		console.log(activations);
+		console.log(magnified);
+	}, [tokens]);
+
 	return (
 		<div style={{ width: CONTAINER_WIDTH }}>
 			<form
@@ -185,7 +192,7 @@ const Inspector = ({
 					>
 						Process Passage
 					</button>
-					<div style={{ width: CONTAINER_WIDTH }}>{processingState}</div>
+					{/* <div style={{ width: CONTAINER_WIDTH }}>{processingState}</div> */}
 				</div>
 			</form>
 			<div
@@ -225,6 +232,11 @@ const Inspector = ({
 						})}
 				</div>
 			</div>
+			{processingState !== "" && processedFeatures.length == 0 && (
+				<div>
+					<LoadingIcon />
+				</div>
+			)}
 		</div>
 	);
 };

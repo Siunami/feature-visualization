@@ -9,14 +9,16 @@ import { ProcessedFeaturesType } from "./types";
 import Explorer from "./components/Explorer";
 
 export default function App() {
-	const [uniqueFeatures, setUniqueFeatures] =
-		useState<ProcessedFeaturesType[]>(bret_activations);
-	const [processedFeatures, setProcessedFeatures] =
-		useState<ProcessedFeaturesType[]>(bret_activations);
+	const [uniqueFeatures, setUniqueFeatures] = useState<ProcessedFeaturesType[]>(
+		[]
+	);
+	const [processedFeatures, setProcessedFeatures] = useState<
+		ProcessedFeaturesType[]
+	>([]);
 
 	const [magnified, setMagnified] = useState<number | null>(null);
 
-	const [mode, setMode] = useState<"inspector" | "explorer">("inspector");
+	const [mode, setMode] = useState<"inspector" | "explorer">("explorer");
 
 	const onMagnify = (id: string) => {
 		const index: number = processedFeatures.findIndex(
@@ -31,11 +33,12 @@ export default function App() {
 
 	const toggleMode = () => {
 		if (mode === "inspector") {
-			setMagnified(-1);
+			setMagnified(null);
 			setProcessedFeatures([]);
 			setMode("explorer");
 		} else {
-			setProcessedFeatures(uniqueFeatures);
+			setUniqueFeatures(bret_activations);
+			setProcessedFeatures(bret_activations);
 			setMode("inspector");
 		}
 	};
@@ -82,12 +85,15 @@ export default function App() {
 					magnified={magnified}
 				/>
 			) : (
-				<Explorer setProcessedFeatures={setProcessedFeatures} />
+				<Explorer
+					processedFeatures={processedFeatures}
+					setProcessedFeatures={setProcessedFeatures}
+				/>
 			)}
 			{processedFeatures.length > 0 && (
 				<FeatureColumn
 					onMagnify={mode === "inspector" ? onMagnify : undefined}
-					processedFeatures={processedFeatures}
+					processedFeatures={processedFeatures.slice(0, 15)}
 					magnified={magnified}
 				/>
 			)}
