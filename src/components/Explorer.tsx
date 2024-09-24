@@ -167,7 +167,7 @@ const Category = ({
 				<h3>Categories</h3>
 				<div
 					style={{
-						height: "664px",
+						height: "705px",
 						overflowY: "auto",
 						borderRadius: BORDER_RADIUS,
 					}}
