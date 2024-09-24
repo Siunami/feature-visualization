@@ -43,7 +43,7 @@ const FeatureColumn = ({
 									<FeatureCard
 										feature={feature.feature}
 										featureId={feature.id}
-										analysis={feature.analysis}
+										// analysis={feature.analysis}
 										distillation={feature.distillation}
 										onDelete={removeFeature}
 										onMagnify={onMagnify}

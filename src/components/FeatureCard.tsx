@@ -1,5 +1,5 @@
 import "../App.css";
-import ReactMarkdown from "react-markdown";
+// import ReactMarkdown from "react-markdown";
 
 import { useState, useEffect, useRef } from "react";
 import { Activation, Labels } from "../types";
@@ -101,7 +101,7 @@ export function FeatureCardSubHeader({ text }: { text: string }) {
 function FeatureCard({
 	feature,
 	featureId,
-	analysis,
+	// analysis,
 	distillation,
 	onDelete,
 	onMagnify,
@@ -111,7 +111,7 @@ function FeatureCard({
 }: {
 	feature: number;
 	featureId: string;
-	analysis?: string;
+	// analysis?: string;
 	distillation?: Labels;
 	onDelete?: (id: string) => void;
 	onMagnify?: (id: string) => void;
@@ -124,7 +124,7 @@ function FeatureCard({
 	const [contentHeight, setContentHeight] = useState("0px");
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [opacity, setOpacity] = useState(0);
-	const [showAnalysis, setShowAnalysis] = useState(false);
+	// const [showAnalysis, setShowAnalysis] = useState(false);
 
 	useEffect(() => {
 		if (contentRef.current) {
@@ -201,6 +201,8 @@ function FeatureCard({
 						fontSize: ".75rem",
 						marginLeft: "5px",
 						marginRight: "45px",
+						marginTop: "auto",
+						marginBottom: "auto",
 						padding: "1px",
 						fontWeight: "bold",
 						textAlign: "left",
@@ -208,7 +210,7 @@ function FeatureCard({
 					}}
 				>
 					{description}
-					<span
+					{/* <span
 						style={{
 							marginLeft: "5px",
 							cursor: "pointer",
@@ -217,8 +219,8 @@ function FeatureCard({
 						onMouseLeave={() => setShowAnalysis(false)}
 					>
 						ℹ️
-					</span>
-					{showAnalysis && (
+					</span> */}
+					{/* {showAnalysis && (
 						<div
 							style={{
 								position: "fixed",
@@ -237,7 +239,7 @@ function FeatureCard({
 						>
 							<ReactMarkdown>{analysis}</ReactMarkdown>
 						</div>
-					)}
+					)} */}
 				</div>
 			</div>
 
