@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProcessedFeaturesType } from "../types";
 import {
 	BORDER_RADIUS,
@@ -15,7 +15,10 @@ const Category = ({
 	getFeatureActivations,
 }: {
 	categories: any;
-	getFeatureActivations: (features: number[]) => void;
+	getFeatureActivations: (
+		features: number[],
+		categoryKey?: string | null
+	) => void;
 }) => {
 	const [selectedCategory, setSelectedCategory] = useState("");
 	const [members, setMembers] = useState<{ index: number; label: string }[]>(
@@ -75,22 +78,22 @@ const Category = ({
 			setSelectedCategory("");
 			setMembers([]);
 			setPage(0);
-			getFeatureActivations([]);
+			getFeatureActivations([], null);
 		} else {
 			setSelectedCategory(categoryKey);
 			const categoryPath = categoryKey.split("+");
 			const allMembers = getAllMembers(categories, categoryPath);
-			console.log(`All members for ${categoryKey}:`, allMembers);
 			setMembers(allMembers);
 			setPage(0);
+
+			// Get first 15 members
 			const itemsPerPage = 15;
 			const selectedMembers = allMembers.slice(
 				0 * itemsPerPage,
 				(0 + 1) * itemsPerPage
 			);
 			const selectedIds = selectedMembers.map((m) => m.index);
-			console.log(selectedIds);
-			getFeatureActivations(selectedIds);
+			getFeatureActivations(selectedIds, categoryKey);
 		}
 	};
 
@@ -105,31 +108,58 @@ const Category = ({
 						const totalCount = getTotalCount(value);
 						const isSelected = selectedCategory.startsWith(categoryKey);
 
+						const hasChildren = typeof value === "object" && value !== null;
+						const showChildren =
+							hasChildren &&
+							categoryKey.split("+").length > depth &&
+							categoryKey.split("+")[depth] ===
+								selectedCategory.split("+")[depth];
+
 						return (
 							<div
 								key={key}
 								style={{
 									marginLeft: 20 * depth + "px",
-									padding: "2px 5px",
 									backgroundColor: "white",
 								}}
 							>
-								<span
-									onClick={() => handleCategoryClick(categoryKey)}
+								<div
 									style={{
-										backgroundColor: isSelected ? "lightblue" : "white",
-										color: "black",
-										// padding: "2px 5px",
-										cursor: "pointer",
+										display: "flex",
+										flexDirection: "row",
+										paddingLeft: "4px",
 									}}
 								>
-									{key.trim()} ({totalCount})
-								</span>
-								{typeof value === "object" &&
-									categoryKey.split("+").length > depth &&
-									categoryKey.split("+")[depth] ===
-										selectedCategory.split("+")[depth] &&
-									value !== null &&
+									<div
+										style={{
+											marginRight: "5px",
+											marginTop: "auto",
+											marginBottom: "auto",
+											fontSize: "12px",
+											color:
+												hasChildren &&
+												!(Object.keys(value).length == 1 && value.members)
+													? "black"
+													: "transparent",
+										}}
+									>
+										▶
+									</div>
+
+									<span
+										onClick={() => handleCategoryClick(categoryKey)}
+										style={{
+											backgroundColor: isSelected ? "lightgrey" : "white",
+											color: "black",
+											padding: "2px 0px",
+											cursor: "pointer",
+											borderBottom: "1px solid grey",
+										}}
+									>
+										{key.trim()} ({totalCount})
+									</span>
+								</div>
+								{showChildren &&
 									renderCategories(value, depth + 1, categoryKey)}
 							</div>
 						);
@@ -160,8 +190,8 @@ const Category = ({
 				style={{
 					position: "absolute",
 					top: "-20px",
-					left: "-340px",
-					width: "320px",
+					left: "-370px",
+					width: "350px",
 				}}
 			>
 				<h3>Categories</h3>
@@ -217,17 +247,33 @@ const Explorer = ({
 		React.SetStateAction<ProcessedFeaturesType[]>
 	>;
 }) => {
-	// const [featureInput, setFeatureInput] = useState("");
 	const [processingState, setProcessingState] = useState("");
+	// const [currentCategory, setCurrentCategory] = useState<string | null>(null);
 
-	const getFeatureActivations = async (features: number[]) => {
+	let currentCategory: string | null = null;
+
+	const getFeatureActivations = async (
+		features: number[],
+		categoryKey: string | null = null
+	) => {
 		setProcessedFeatures([]);
+		currentCategory = categoryKey;
+
+		// console.log("categoryKey: ", categoryKey);
+
 		try {
 			setProcessingState("Processing features...");
 			const activations = await getActivations(features);
-			console.log(activations);
-			setProcessingState("");
-			setProcessedFeatures(activations);
+			// console.log(activations);
+
+			// console.log("categoryKey after activation: ", categoryKey);
+			// console.log("currentCategory: ", currentCategory);
+
+			// Use categoryKey instead of currentCategory
+			if (categoryKey === currentCategory) {
+				setProcessingState("");
+				setProcessedFeatures(activations);
+			}
 		} catch (error) {
 			console.error("Error processing features:", error);
 			setProcessingState("Error processing features");
